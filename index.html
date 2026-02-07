@@ -38,17 +38,21 @@
             display: none;
             flex-direction: column;
             align-items: center;
-            padding: 40px 0;
+            /* Padding badhai hai taki upar ke lifafe na katein */
+            padding: 80px 0 40px 0; 
             position: fixed; /* Poori screen cover karne ke liye */
             height: 100vh;
+            box-sizing: border-box; /* Padding ko height me include karne ke liye */
         }
 
         .envelope-grid-large {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 30px; /* Gap ko original grid jaisa kiya */
             padding: 20px;
             max-width: 600px;
+            width: 100%; /* Full width le */
+            box-sizing: border-box;
         }
 
         /* --- EXISTING STYLES (NO CHANGES) --- */
@@ -70,10 +74,31 @@
         #noBtn { background-color: #ff4757; color: white; }
         #envelopePageContainer { background-color: #fce3ec; z-index: 90; }
         .envelope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; z-index: 10; margin-bottom: 30px; }
+        /* Original Envelope Styles - Inka use ab naye page par bhi hoga */
         .envelope-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s; }
         .envelope-item:hover { transform: scale(1.1); }
-        .envelope-icon { width: 100px; height: 70px; background-color: #ff8fab; position: relative; border-radius: 50px; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .envelope-icon { 
+            width: 100px; 
+            height: 70px; 
+            background-color: #ff8fab; 
+            position: relative; 
+            border-radius: 5px; /* Original rectangular shape */
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            font-size: 24px; /* Icon size */
+        }
+        .envelope-icon::after { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            border-left: 50px solid transparent; 
+            border-right: 50px solid transparent; 
+            border-top: 35px solid #ffb3c6; 
+        }
         .envelope-label { margin-top: 10px; color: #d6336c; font-weight: bold; font-size: 14px; }
+        
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background-color: #fffbe6; width: 90%; max-width: 600px; border-radius: 20px; padding: 25px; display: flex; gap: 20px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .modal-image { width: 100%; max-height: 280px; object-fit: cover; border-radius: 15px; border: 4px solid white; }
@@ -139,25 +164,23 @@
     <div id="fireworksPage" class="page-container">
         <h1 style="color: white; font-family: cursive; margin-top: -50px;">I love you Ananya Singh Parihar</h1>
         <p style="color: #ff8fab;">(Click anywhere on the screen!)</p>
-        <button id="jokeBtn" style="display: block; position: absolute; bottom: 50px;" onclick="showJokePage()">( click here for jock )</button>
+        <button id="jokeBtn" style="display: block; position: absolute; bottom: 100px;" onclick="showJokePage()">( click here for jock )</button>
     </div>
 
     <div id="jokePage" class="page-container">
         <h2 style="color: #d6336c;">Surprise Joke! 😂</h2>
         <img src="images/JOCK.jpg" alt="Spider Dudu Joke" class="joke-img">
         <br>
-        <div style="margin-top: 30px; display: flex; gap: 15px;">
-            <button class="submit-btn" onclick="location.reload()">Back to Start 🔄</button>
+        <div style="margin-top: 30px;">
             <button class="submit-btn" style="background-color: #ff8fab;" onclick="showFinalEnvelopes()">Click here Anya</button>
         </div>
     </div>
 
     <div id="finalEnvelopePage" class="page-container">
         <div class="hearts-bg" id="heartsFinal"></div>
-        <h1 style="color: #d6336c; z-index: 10;">18 Special Memories 🩷</h1>
+        <h1 style="color: #d6336c; z-index: 10; margin-bottom: 20px;">18 Special Memories 🩷</h1>
         <div class="envelope-grid-large" id="largeGrid">
             </div>
-        <button class="submit-btn" style="margin: 40px; z-index: 10;" onclick="showJokePage()">Go Back</button>
     </div>
 
     <div id="modalOverlay" class="modal-overlay">
@@ -175,6 +198,7 @@
         function createHearts(id) { 
             const container = document.getElementById(id); 
             const hearts = ['🩷', '♥️', '💞', '💖']; 
+            container.innerHTML = ''; // Clear previous hearts
             for (let i = 0; i < 30; i++) { 
                 const h = document.createElement('div'); 
                 h.className = 'heart'; 
@@ -245,16 +269,19 @@
             generate18Envelopes(); // Lifafe banane ka kaam
         }
 
+        // Function to generate 18 envelopes with ORIGINAL design
         function generate18Envelopes() {
             const grid = document.getElementById('largeGrid');
             grid.innerHTML = ''; // Pehle grid khali karein
             for (let i = 5; i <= 22; i++) {
                 const item = document.createElement('div');
+                // Original classes ka use kiya gaya hai
                 item.className = 'envelope-item';
                 item.onclick = () => openEnvelope(i);
+                // Original icon structure aur ek heart emoji
                 item.innerHTML = `
-                    <div class="envelope-icon">💌</div>
-                    <div class="envelope-label">Memory ${i-4}</div>
+                    <div class="envelope-icon">💖</div>
+                    <div class="envelope-label">Memory ${i}</div>
                 `;
                 grid.appendChild(item);
             }
