@@ -20,7 +20,6 @@
 
         .page-container { 
             display: none; 
-            /* Content upar se shuru ho isliye flex-start kiya hai */
             justify-content: flex-start; 
             align-items: center; 
             min-height: 100vh; 
@@ -31,7 +30,7 @@
             flex-direction: column; 
         }
 
-        /* --- FINAL 18 ENVELOPES PAGE (SCROLL FIX) --- */
+        /* --- FINAL 18 ENVELOPES PAGE --- */
         #finalEnvelopePage {
             background-color: #fce3ec;
             z-index: 500;
@@ -39,10 +38,8 @@
             display: none;
             flex-direction: column;
             align-items: center;
-            /* Scroll hamesha top se shuru hoga */
             justify-content: flex-start; 
-            /* Top padding thodi aur badhai hai */
-            padding-top: 120px;
+            padding-top: 50px;
             padding-bottom: 60px;
             position: fixed;
             height: 100vh;
@@ -60,6 +57,13 @@
             box-sizing: border-box;
         }
 
+        /* --- NEW SURPRISE PAGES STYLES --- */
+        #suggestionPage, #page24, #page25, #page26, #page27 {
+            background-color: #fffbe6;
+            z-index: 600;
+            justify-content: center;
+        }
+
         /* --- BOX & INPUT STYLES --- */
         .quiz-container-style { 
             background-color: #ffc2d1; 
@@ -73,7 +77,7 @@
             text-align: center; 
             box-shadow: 0 10px 30px rgba(255, 77, 109, 0.3); 
             max-width: 80%; 
-            margin-top: 50px;
+            margin-top: 100px;
         }
 
         .quiz-box h2 { 
@@ -132,14 +136,8 @@
         }
 
         @keyframes floatUp { 
-            0% { 
-                transform: translateY(0) rotate(0deg); 
-                opacity: 1; 
-            } 
-            100% { 
-                transform: translateY(-110vh) rotate(360deg); 
-                opacity: 0; 
-            } 
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; } 
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; } 
         }
 
         /* --- ENVELOPE DESIGN --- */
@@ -149,7 +147,7 @@
             gap: 30px; 
             z-index: 10; 
             margin-bottom: 30px; 
-            margin-top: 100px;
+            margin-top: 120px;
         }
 
         .envelope-item { 
@@ -160,9 +158,7 @@
             transition: transform 0.2s; 
         }
 
-        .envelope-item:hover { 
-            transform: scale(1.1); 
-        }
+        .envelope-item:hover { transform: scale(1.1); }
 
         .envelope-icon { 
             width: 100px; 
@@ -389,18 +385,44 @@
     <div id="finalEnvelopePage" class="page-container">
         <div class="hearts-bg" id="heartsFinal"></div>
         <h1 style="color: #d6336c; z-index: 10; margin-bottom: 20px; position: relative;">18 Special Memories 🩷</h1>
-        <div class="envelope-grid-large" id="largeGrid">
-            </div>
+        <div class="envelope-grid-large" id="largeGrid"></div>
+        <button id="suggestionBtn" class="submit-btn" style="margin-top: 30px; margin-bottom: 50px; background-color: #ff8fab;" onclick="showSuggestionPage()">suggestion for you</button>
+    </div>
+
+    <div id="suggestionPage" class="page-container">
+        <img src="images/img23.jpg" class="joke-img">
+        <br>
+        <button class="submit-btn" style="background-color: #ff4d6d;" onclick="showPage24()">FOR YOU ANYA</button>
+    </div>
+
+    <div id="page24" class="page-container">
+        <img src="images/img24.jpg" class="joke-img">
+        <br>
+        <button class="submit-btn" style="background-color: #ff8fab;" onclick="showPage25()">next</button>
+    </div>
+
+    <div id="page25" class="page-container">
+        <img src="images/img25.jpg" class="joke-img">
+        <br>
+        <button class="submit-btn" style="background-color: #ff8fab;" onclick="showPage26()">next</button>
+    </div>
+
+    <div id="page26" class="page-container">
+        <img src="images/img26.jpg" class="joke-img">
+        <br>
+        <button class="submit-btn" style="background-color: #ff8fab;" onclick="showPage27()">next</button>
+    </div>
+
+    <div id="page27" class="page-container">
+        <img src="images/img27.jpg" class="joke-img">
+        <br>
+        <button class="submit-btn" style="background-color: #ff4d6d;" onclick="location.reload()">Happy Valentine's Day! ❤️</button>
     </div>
 
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal-content">
-            <div style="flex:1">
-                <img id="modalImg" src="" class="modal-image">
-            </div>
-            <div style="flex:1">
-                <p id="modalText" class="modal-message"></p>
-            </div>
+            <div style="flex:1"><img id="modalImg" src="" class="modal-image"></div>
+            <div style="flex:1"><p id="modalText" class="modal-message"></p></div>
             <button class="back-btn" onclick="closeModal()">Back</button>
         </div>
     </div>
@@ -424,34 +446,23 @@
             } 
         }
 
-        window.onload = () => { 
-            createHearts('hearts1'); 
-            createHearts('hearts2'); 
-            createHearts('hearts3'); 
-        };
+        window.onload = () => { createHearts('hearts1'); createHearts('hearts2'); createHearts('hearts3'); };
 
-        // QUIZ LOGIC
+        // QUIZ & BUTTON LOGIC
         function checkAnswer1() { 
-            const val = document.getElementById('ans1').value.trim().toLowerCase(); 
-            if(val === 'anya') { 
+            if(document.getElementById('ans1').value.trim().toLowerCase() === 'anya') { 
                 document.getElementById('quizPage1').style.display = 'none'; 
                 document.getElementById('quizPage2').style.display = 'flex'; 
-            } else { 
-                document.getElementById('error1').style.display = 'block'; 
-            } 
+            } else document.getElementById('error1').style.display = 'block'; 
         }
 
         function checkAnswer2() { 
-            const val = document.getElementById('ans2').value.trim().toLowerCase(); 
-            if(val === 'teree') { 
+            if(document.getElementById('ans2').value.trim().toLowerCase() === 'teree') { 
                 document.getElementById('quizPage2').style.display = 'none'; 
                 document.getElementById('questionPageContainer').style.display = 'flex'; 
-            } else { 
-                document.getElementById('error2').style.display = 'block'; 
-            } 
+            } else document.getElementById('error2').style.display = 'block'; 
         }
 
-        // NO BUTTON LOGIC
         function moveButton() { 
             const btn = document.getElementById('noBtn'); 
             btn.style.position = "fixed"; 
@@ -464,7 +475,7 @@
             document.getElementById('envelopePageContainer').style.display = 'flex'; 
         }
 
-        // ENVELOPE DATA (1 to 22)
+        // ENVELOPE DATA
         const envelopeData = {
             1: { img: "images/img1.jpg", text: "This 14th February, it’s just you, Ananya. ❤️" },
             2: { img: "images/img2.jpg", text: "You matter to me in ways words can never explain. ❤️" },
@@ -496,16 +507,12 @@
             document.getElementById('modalText').innerText = data.text; 
             document.getElementById('modalOverlay').style.display = 'flex'; 
             openedEnvelopes.add(id);
-            if(openedEnvelopes.size === 4 && id <= 4) { 
-                document.getElementById('moreAnyaBtn').style.display = 'block'; 
-            }
+            if(openedEnvelopes.size === 4 && id <= 4) document.getElementById('moreAnyaBtn').style.display = 'block'; 
         }
 
-        function closeModal() { 
-            document.getElementById('modalOverlay').style.display = 'none'; 
-        }
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
 
-        // PAGE NAVIGATION
+        // NAVIGATION FUNCTIONS
         function showFireworksPage() { 
             document.getElementById('envelopePageContainer').style.display = 'none'; 
             document.getElementById('fireworksPage').style.display = 'flex'; 
@@ -513,74 +520,66 @@
 
         function showJokePage() { 
             document.getElementById('fireworksPage').style.display = 'none'; 
-            document.getElementById('finalEnvelopePage').style.display = 'none'; 
             document.getElementById('jokePage').style.display = 'flex'; 
         }
 
         function showFinalEnvelopes() {
             document.getElementById('jokePage').style.display = 'none';
             document.getElementById('finalEnvelopePage').style.display = 'flex';
-            // Page ko scroll back to top karne ke liye
-            document.getElementById('finalEnvelopePage').scrollTop = 0;
-            createHearts('heartsFinal'); 
             generate18Envelopes(); 
         }
 
-        // GENERATE 18 ENVELOPES
+        function showSuggestionPage() {
+            document.getElementById('finalEnvelopePage').style.display = 'none';
+            document.getElementById('suggestionPage').style.display = 'flex';
+        }
+
+        // INDIVIDUAL PAGE SHOW FUNCTIONS
+        function showPage24() {
+            document.getElementById('suggestionPage').style.display = 'none';
+            document.getElementById('page24').style.display = 'flex';
+        }
+        function showPage25() {
+            document.getElementById('page24').style.display = 'none';
+            document.getElementById('page25').style.display = 'flex';
+        }
+        function showPage26() {
+            document.getElementById('page25').style.display = 'none';
+            document.getElementById('page26').style.display = 'flex';
+        }
+        function showPage27() {
+            document.getElementById('page26').style.display = 'none';
+            document.getElementById('page27').style.display = 'flex';
+        }
+
         function generate18Envelopes() {
-            const grid = document.getElementById('largeGrid');
-            grid.innerHTML = ''; 
+            const grid = document.getElementById('largeGrid'); grid.innerHTML = ''; 
             for (let i = 1; i <= 18; i++) {
-                const item = document.createElement('div');
-                item.className = 'envelope-item';
-                // i+4 kyunki data mein images 5 se shuru hain
+                const item = document.createElement('div'); item.className = 'envelope-item';
                 item.onclick = () => openEnvelope(i + 4); 
-                item.innerHTML = `
-                    <div class="envelope-icon">💖</div>
-                    <div class="envelope-label">Memory ${i}</div>
-                `;
+                item.innerHTML = `<div class="envelope-icon">💖</div><div class="envelope-label">Memory ${i}</div>`;
                 grid.appendChild(item);
             }
         }
 
-        // FIREWORKS ANIMATION
+        // FIREWORKS
         document.getElementById('fireworksPage').addEventListener('click', (e) => { 
-            if (e.target.id !== 'jokeBtn') {
-                createFirework(e.clientX, e.clientY);
-            }
+            if (e.target.id !== 'jokeBtn') createFirework(e.clientX, e.clientY);
         });
 
         const letters = "I LOVE YOU ANANYA SINGH PARIHAR 💞";
         let letterIndex = 0;
-
         function createFirework(x, y) {
-            const numberOfParticles = 12;
-            for (let i = 0; i < numberOfParticles; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'firework-text';
-                particle.innerText = letters[letterIndex % letters.length];
-                letterIndex++;
-                document.getElementById('fireworksPage').appendChild(particle);
-                particle.style.left = x + 'px'; 
-                particle.style.top = y + 'px';
-
-                const angle = (Math.PI * 2 / numberOfParticles) * i;
-                const distance = 100 + Math.random() * 150;
-                const destX = Math.cos(angle) * distance;
-                const destY = Math.sin(angle) * distance;
-
-                anime({ 
-                    targets: particle, 
-                    translateX: destX, 
-                    translateY: destY, 
-                    opacity: [1, 0], 
-                    easing: 'easeOutExpo', 
-                    duration: 2000 + Math.random() * 1000, 
-                    complete: () => particle.remove() 
-                });
+            const num = 12;
+            for (let i = 0; i < num; i++) {
+                const p = document.createElement('div'); p.className = 'firework-text';
+                p.innerText = letters[letterIndex % letters.length]; letterIndex++;
+                document.getElementById('fireworksPage').appendChild(p);
+                p.style.left = x + 'px'; p.style.top = y + 'px';
+                const angle = (Math.PI * 2 / num) * i;
+                anime({ targets: p, translateX: Math.cos(angle)*150, translateY: Math.sin(angle)*150, opacity: [1, 0], easing: 'easeOutExpo', duration: 2500, complete: () => p.remove() });
             }
         }
     </script>
 </body>
 </html>
-            
