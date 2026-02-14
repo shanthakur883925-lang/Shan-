@@ -58,10 +58,38 @@
         }
 
         /* --- NEW SURPRISE PAGES STYLES --- */
-        #suggestionPage, #page24, #page25, #page26, #page27 {
+        #suggestionPage, #page24, #page25, #page26, #page27, #finalNotePage {
             background-color: #fffbe6;
             z-index: 600;
             justify-content: center;
+        }
+
+        /* --- FINAL NOTE PAGE STYLE --- */
+        #finalNotePage {
+            background: linear-gradient(135deg, #fce3ec 0%, #ffc2d1 100%);
+            overflow-y: auto;
+            padding: 40px 20px;
+            display: none;
+        }
+
+        .typewriter-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.3);
+            max-width: 90%;
+            width: 500px;
+            border: 3px solid #ff8fab;
+            margin: auto;
+        }
+
+        #typewriterContent {
+            color: #d6336c;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 17px;
+            line-height: 1.6;
+            white-space: pre-wrap; /* Keeps the line breaks */
         }
 
         /* --- BOX & INPUT STYLES --- */
@@ -402,21 +430,29 @@
     </div>
 
     <div id="page25" class="page-container">
-        <img src="images/img25.jpg" class="joke-img">
+        <img src="images/img24.jpg" class="joke-img">
         <br>
         <button class="submit-btn" style="background-color: #ff8fab;" onclick="showPage26()">next</button>
     </div>
 
     <div id="page26" class="page-container">
-        <img src="images/img26.jpg" class="joke-img">
+        <img src="images/img24.jpg" class="joke-img">
         <br>
         <button class="submit-btn" style="background-color: #ff8fab;" onclick="showPage27()">next</button>
     </div>
 
     <div id="page27" class="page-container">
-        <img src="images/img27.jpg" class="joke-img">
+        <img src="images/img24.jpg" class="joke-img">
         <br>
-        <button class="submit-btn" style="background-color: #ff4d6d;" onclick="location.reload()">Happy Valentine's Day! ❤️</button>
+        <button class="submit-btn" style="background-color: #ff4d6d;" onclick="showFinalNote()">see my final note</button>
+    </div>
+
+    <div id="finalNotePage" class="page-container">
+        <div class="hearts-bg" id="heartsFinalNote"></div>
+        <div class="typewriter-box">
+            <div id="typewriterContent"></div>
+            <button id="restartBtn" class="submit-btn" style="margin-top: 30px; display: none; width: 100%;" onclick="location.reload()">Start Over ❤️</button>
+        </div>
     </div>
 
     <div id="modalOverlay" class="modal-overlay">
@@ -550,6 +586,37 @@
         function showPage27() {
             document.getElementById('page26').style.display = 'none';
             document.getElementById('page27').style.display = 'flex';
+        }
+
+        // --- NEW FINAL NOTE LOGIC ---
+        function showFinalNote() {
+            document.getElementById('page27').style.display = 'none';
+            document.getElementById('finalNotePage').style.display = 'flex';
+            createHearts('heartsFinalNote');
+            startTypewriter();
+        }
+
+        function startTypewriter() {
+            const message = `Hi bubu,\nThis is the last message of this project, and I really hope you liked it.\nI made it with all my heart.\nI love you, bubu 😚\nAnd thank you for everything you have done for me.\nI know sometimes I make mistakes, and sometimes I mess things up,\nbut that never means that I don’t love you.\nThe truth is, I love you a lot… more than I can explain in words.\nHonestly, I didn’t know what exactly to write in this message.\nThere is so much I want to say,\nbut the page feels too small for everything that’s in my heart.\nSo I just want to say one simple thing —\nyou are very special to me.\nYou were, you are, and you will always be.\nThat will never change.\nPlease don’t fight with me too much, girl 😅\nI’m not perfect, but my intentions for you are always real.\nThank you for coming into my life.\nThank you for standing by me and supporting me the way you do.\nAll I truly want is for you to always stay with me.\nI love you 😚\nI love you so much 😚😚\nThank you for everything 😚😚😚😚`;
+
+            const container = document.getElementById('typewriterContent');
+            let i = 0;
+            container.innerHTML = ""; // Clear content first
+
+            function type() {
+                if (i < message.length) {
+                    container.innerHTML += message.charAt(i);
+                    i++;
+                    setTimeout(type, 50); // Letter-by-letter speed (50ms)
+                    
+                    // Auto-scroll to bottom as text appears
+                    const page = document.getElementById('finalNotePage');
+                    page.scrollTop = page.scrollHeight;
+                } else {
+                    document.getElementById('restartBtn').style.display = 'block';
+                }
+            }
+            type();
         }
 
         function generate18Envelopes() {
